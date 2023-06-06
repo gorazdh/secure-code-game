@@ -17,14 +17,13 @@ Order = namedtuple('Order', 'id, items')
 Item = namedtuple('Item', 'type, description, amount, quantity')
 
 def validorder(order: Order):
-    net = 0
+    net = 0.0
     
     for item in order.items:
         if item.type == 'payment':
-            if item.amount > 0:
-                net += item.amount
+            net = round(net + item.amount, 2)
         elif item.type == 'product':
-            net -= item.amount * item.quantity
+            net = round(net - item.amount * item.quantity, 2)
         else:
             return("Invalid item type: %s" % item.type)
     
